@@ -1,0 +1,45 @@
+sqoop: https://sqoop.apache.org/docs/1.4.7/SqoopUserGuide.html
+------------------------------------------------------------------------------------------------
+18 feb 2023
+Using Sqoop can help us get rid of writing complex Map-Reduce programs. 
+
+Requirement : Linux server operating system (Ubuntu Server) and Docker Engine installed in it.
+
+ways:
+1. Virtual Box and Linux OS installed in it
+2. AWS EC2 instance and SSH client(MobaXterm) 
+-- .pem file is downloaded while creating the instance 
+
+
+# install docker
+https://docs.docker.com/engine/install/ubuntu/
+
+# run cloudera image
+
+---------------------------------
+mysql> use retail_db;
+mysql> show tables;
+mysql> describe categories;
+mysql> select * from orders;
+
+----------------------------------------
+> sqoop list-databases \
+> --connect jdbc:mysql://localhost:3306 \
+> --username root \
+> --password cloudera
+
+> sqoop list-tables \
+> --connect jdbc:mysql://localhost:3306/retail_db \
+> --username root \
+> --password cloudera \
+
+
+
+
+------------------------------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------------------------------
