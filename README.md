@@ -81,7 +81,7 @@ docker run --hostname=quickstart.cloudera --privileged=true -t -i -v /home/ubunt
 Set the docker permission
 
 ```bash
-sudo usermod -aG docker ubuntu
+sudo usermod -aG docker ubuntu       (ubuntu is the <username> here)
 newgrp docker
 ```
 
