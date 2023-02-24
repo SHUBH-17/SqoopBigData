@@ -37,6 +37,56 @@ mysql> select * from orders;
 
 
 ------------------------------------------------------------------------------------------------
+19 feb 2023
+
+aws setup:
+
+1.click EC2
+2.instances running
+3.select nearest region (here the machine resides and we rent these machines on hourly basis)
+4.launch instance
+5.name of instance: sqoop
+6.base image: ubuntu
+7.instance type: t2.xlarge
+8.Create key value pair: sqoop
+9.allow all network access
+10.confiure storage: 100 GB
+11.launch instance
+
+--------------------------
+open instance -> connect (SSH client:MobaXterm,PuTTY)
+open terminal -> change path/directory where .pem file is located and follow the commands provided at above step.
+
+ubuntu terminal will be open (this connects to the machine)
+--install docker : https://docs.docker.com/engine/install/ubuntu/
+>>docker --version
+
+
+--terminal connecting sqoop:
+>>sudo usermod -aG docker ubuntu (ubuntu is <username>)
+>>newgrp docker
+
+--install Cloudera docker image
+>>docker ps
+>>docker exec -it <containerid> bash (enters into container)
+
+>>sqoop version
+>>sqoop list-databases \
+>>--connect jdbc:mysql://localhost:3306 \
+>>--username root \
+>>--password cloudera
+
+
+--open another terminal and connect mysql :
+>>sudo usermod -aG docker ubuntu (ubuntu is <username>)
+>>newgrp docker
+
+--install Cloudera docker image
+
+>>mysql -uroot -pcloudera
+mysql>>show databases;
+
+
 
 
 ------------------------------------------------------------------------------------------------
