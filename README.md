@@ -155,6 +155,8 @@ hdfs dfs -ls /user/root/categories/
 # getting inside the file
 hdfs dfs -cat /user/root/categories/part-m-00000
 
+hdfs dfs -cat /user/root/categories/part*
+
 # get no of rows
 hdfs dfs -cat /user/root/categories/part-m-00000 | wc -l
 ```
