@@ -181,7 +181,7 @@ sqoop eval \
 --query "show tables"
 ```
 
-### removing/deleting file/folder in hdfs
+### removing/deleting dir in hdfs
 ```
 hdfs dfs -rm -r /user/root/categories
 ```
