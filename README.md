@@ -181,6 +181,12 @@ sqoop eval \
 --query "show tables"
 ```
 
+### removing/deleting file/folder in hdfs
+```
+hdfs dfs -rm -r /user/root/categories
+```
+
+
 ### Boundary Query
 
 Boundary query is used to optimised query by using fields like min, max, between, split by etc kind of fields.
