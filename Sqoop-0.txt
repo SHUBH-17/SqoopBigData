@@ -90,6 +90,132 @@ mysql>>show databases;
 
 
 ------------------------------------------------------------------------------------------------
+25 feb 2023
+
+CTRL+L -> clear screen
+
+#target-dir vs warehouse-dir
+sqoop import \
+--connect jdbc:mysql://localhost:3306/retail_db \
+--table customers \
+--username root \
+--password-file file:///sqoop.pwd \
+--warehouse-dir /user/dataware             -> creates a dir with the table name (customers in this case) and places the data files here
+
+sqoop import \
+--connect jdbc:mysql://localhost:3306/retail_db \
+--table customers \
+--username root \
+--password-file file:///sqoop.pwd \
+--target-dir /user/data/customers          -> customers dir is provided manually else the data will be imported in /user/data directory
+
+
+
+#importing specific columns:
+sqoop import \
+--connect jdbc:mysql://localhost:3306/retail_db \
+--username root \
+--password-file file:///sqoop.pwd \
+--table customers \
+--target-dir /user/data/customers
+--delete-target-dir 
+--columns "customer_id,customer_fname,customer_lname"
+
+
+#importing specific data/rows:
+sqoop import \
+--connect jdbc:mysql://localhost:3306/retail_db \
+--username root \
+--password-file file:///sqoop.pwd \
+--table customers \
+--target-dir /user/data/customers
+--delete-target-dir 
+--where "customer_id < 100"
+
+sqoop import \
+--connect jdbc:mysql://localhost:3306/retail_db \
+--username root \
+--password-file file:///sqoop.pwd \
+--table customers \
+--target-dir /user/data/customers
+--delete-target-dir 
+--where "customer_state = 'NV'"
+
+
+#importing all tables of a database in one go
+sqoop import-all-tables \
+--connect jdbc:mysql://localhost:3306/retail_db \
+--username root \
+--password-file file:///sqoop.pwd \
+--warehouse-dir /user/dataware             -> creates individual tables dir automatically
+--autoreset-to-one-mapper                  -> this parameter creates one split or 1 file for those tables which does not have any primary key
+
+
+#exclude-tables parameter -> excludes few tables 
+sqoop import-all-tables \
+--connect jdbc:mysql://localhost:3306/retail_db \
+--username root \
+--password-file file:///sqoop.pwd \
+--warehouse-dir /user/dataware             -> creates individual tables dir automatically
+--autoreset-to-one-mapper                  -> this parameter creates one split or 1 file for those tables which does not have any primary key
+--exclude-tables 'orders,products'
+
+
+#importing data in compressed form (.gz)
+sqoop import \
+--connect jdbc:mysql://localhost:3306/retail_db \
+--username root \
+--password-file file:///sqoop.pwd \
+--table order_items \
+--target-dir /user/data/order_items            
+--compress
+
+#-text -> reads compressed/zipped data
+>>hdfs dfs -text /user/data/order_items/part-m-00000.gz
+
+
+#as-sequencefile parameter - another compressed file format
+sqoop import \
+--connect jdbc:mysql://localhost:3306/retail_db \
+--username root \
+--password-file file:///sqoop.pwd \
+--table orders \
+--target-dir /user/data/orders          
+--as-sequencefile
+
+>>hdfs dfs -text /user/data/orders/part-m-00000
+
+
+#as-avrodatafile parameter - another compressed file format
+sqoop import \
+--connect jdbc:mysql://localhost:3306/retail_db \
+--username root \
+--password-file file:///sqoop.pwd \
+--table products \
+--target-dir /user/data/products          
+--as-avrodatafile
+
+>>hdfs dfs -text /user/data/products/part-m-00000.avro
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ------------------------------------------------------------------------------------------------
